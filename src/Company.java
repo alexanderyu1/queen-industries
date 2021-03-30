@@ -222,4 +222,54 @@ public class Company {
         company.adjustSalaries();
         company.testInvalidOperations();
     }
+
+    private Director getDirector(String department) {
+        for (Employee director : staff) {
+            if (director.department.equals(department)) {
+                return (Director) director;
+            }
+        }
+        return null;
+    }
+
+    private Employee getEmployee(String name) {
+        for (Employee director : staff) {
+            for (Employee manager : ((Director) director).reports) {
+                if (manager.name.equals(name)) {
+                    return (Manager) manager;
+                }
+                for (Employee employee : ((Manager) manager).reports) {
+                    if (employee.name.equals(name)) {
+                        return employee;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    private void printEmployeeDetails(Employee employee) {
+        System.out.println("Employee     : " + employee.name);
+        System.out.println("Department   : " + employee.name);
+        System.out.println("Title        : " + employee.name);
+        System.out.println("Compensation : " + employee.salary);
+
+    }
+    private void printEmployeeDetails(Manager manager) {
+        System.out.println("Employee     : " + manager.name);
+        System.out.println("Department   : " + manager.name);
+        System.out.println("Title        : " + manager.name);
+        System.out.println("Compensation : " + (manager.salary + manager.bonus));
+    }
+    private void printEmployeeDetails(Director director) {
+        System.out.println("Employee     : " + director.name);
+        System.out.println("Department   : " + director.name);
+        System.out.println("Title        : " + director.name);
+        System.out.println("Compensation : " + (director.salary + director.bonus + director.stockShares));
+    }
+
+    private void printOrganizationChart() {
+        System.out.println("Queen Industries Organization Chart");
+        for (xf)
+    }
 }

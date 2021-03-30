@@ -1,5 +1,5 @@
 public class Employee implements Comparable {
-    private int tier;
+    public int tier;
     public double salary;
     public String name;
     public String department;
@@ -13,5 +13,14 @@ public class Employee implements Comparable {
         this.title = title;
     }
 
-
+    @Override public int compareTo(Object o) {
+        Employee employee = (Employee) o;
+        if (this.tier > employee.tier) {
+            return 1;
+        }
+        else if (this.tier < employee.tier) {
+            return -1;
+        }
+        return 0;
+    }
 }
