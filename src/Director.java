@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Director extends Manager {
     public int tier;
@@ -10,5 +11,8 @@ public class Director extends Manager {
         this.tier = tier;
     }
 
-
+    @Override
+    public int getTier() {
+        return tier;
+    }
 }

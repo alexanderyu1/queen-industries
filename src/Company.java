@@ -122,7 +122,6 @@ public class Company {
 
             outsideSalesManager.hire(outsideSalesEmployee1);
             outsideSalesManager.hire(outsideSalesEmployee2);
-            System.out.println();
         }
     }
 
@@ -138,7 +137,6 @@ public class Company {
 
         director.fire(salesManager);
         marketingManager.fire(employee);
-        System.out.println();
     }
 
     /**
@@ -253,26 +251,29 @@ public class Company {
 
     private void printEmployeeDetails(Employee employee) {
         System.out.println("Employee     : " + employee.name);
-        System.out.println("Department   : " + employee.name);
-        System.out.println("Title        : " + employee.name);
+        System.out.println("Department   : " + employee.department);
+        System.out.println("Title        : " + employee.title);
         System.out.println("Compensation : " + employee.salary);
-
+        System.out.println();
     }
     private void printEmployeeDetails(Manager manager) {
         System.out.println("Employee     : " + manager.name);
-        System.out.println("Department   : " + manager.name);
-        System.out.println("Title        : " + manager.name);
+        System.out.println("Department   : " + manager.department);
+        System.out.println("Title        : " + manager.title);
         System.out.println("Compensation : " + (manager.salary + manager.bonus));
+        System.out.println();
     }
     private void printEmployeeDetails(Director director) {
         System.out.println("Employee     : " + director.name);
-        System.out.println("Department   : " + director.name);
-        System.out.println("Title        : " + director.name);
+        System.out.println("Department   : " + director.department);
+        System.out.println("Title        : " + director.title);
         System.out.println("Compensation : " + (director.salary + director.bonus + director.stockShares * SHARE_PRICE));
+        System.out.println();
     }
 
     private void printOrganizationChart() {
         List<Employee> sortedEmployees = sortEmployees();
+        System.out.println();
         System.out.println("Queen Industries Organization Chart");
         for (Employee director : sortedEmployees) {
             if (((Director) director).tier == Company.DIRECTOR) {

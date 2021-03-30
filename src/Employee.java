@@ -13,6 +13,10 @@ public class Employee implements Comparable {
         this.title = title;
     }
 
+    public int getTier() {
+        return tier;
+    }
+
     @Override public int compareTo(Object o) {
         Employee employee = (Employee) o;
         if (this.tier > employee.tier) {

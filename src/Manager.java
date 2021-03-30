@@ -18,9 +18,14 @@ public class Manager extends Employee {
         this.tier = tier;
     }
 
+    @Override
+    public int getTier() {
+        return tier;
+    }
+
     public void hire(Employee employee) throws Exception {
-        if (this.tier <= employee.tier) {
-            throw new Exception("ERROR: cannot hire an Employee of an equal or greater tier.\n");
+        if (this.getTier() <= employee.getTier()) {
+            throw new Exception("ERROR: cannot hire an Employee of an equal or greater tier.");
         }
         else {
             this.reports.add(employee);
@@ -30,10 +35,10 @@ public class Manager extends Employee {
 
     public void fire(Employee employee) throws Exception {
         if (this.tier <= employee.tier) {
-            throw new Exception("ERROR: cannot hire an Employee of an equal or greater tier.\n");
+            throw new Exception("ERROR: cannot hire an Employee of an equal or greater tier.");
         }
         else if (!this.reports.contains(employee)) {
-            throw new Exception("ERROR: cannot fire an Employee who is not a direct or indirect report.\n");
+            throw new Exception("ERROR: cannot fire an Employee who is not a direct or indirect report.");
         }
         else {
             this.reports.remove(employee);
@@ -42,14 +47,15 @@ public class Manager extends Employee {
     }
 
     public void fire(Manager employee) throws Exception {
-        if (this.tier <= employee.tier) {
-            throw new Exception("ERROR: cannot hire an Employee of an equal or greater tier.\n");
+        if (this.getTier() <= employee.getTier()) {
+            throw new Exception("ERROR: cannot hire an Employee of an equal or greater tier.");
         }
-        else if (!this.reports.contains(employee)) {
-            throw new Exception("ERROR: cannot fire an Employee who is not a direct or indirect report.\n");
+        else if (!employee.department.equals(this.department)) {
+            throw new Exception("ERROR: cannot fire an Employee who is not a direct or indirect report.");
         }
         else {
             this.reports.remove(employee);
+            System.out.println("LOG: existing Employee fired (" + employee.name + ", " + employee.department + ", " + employee.title + ")");
 
             List<Employee> noManager = employee.reports;
 
@@ -65,17 +71,30 @@ public class Manager extends Employee {
                     }
                 }
             }
-            if (reassigned) System.out.println("LOG: reports re-assigned [" + reassignedLog.substring(0, reassignedLog.length() - 2) + "]");
-            System.out.println("LOG: existing Employee fired (" + employee.name + ", " + employee.department + ", " + employee.title + ")");
+            if (reassigned) {
+                System.out.println("LOG: reports re-assigned [" + reassignedLog.substring(0, reassignedLog.length() - 2) + "]");
+            }
         }
     }
 
     public void adjustSalary(int raise, Employee employee) throws Exception {
-        if (this.reports.contains(employee)) {
+        if (this.getTier() <= employee.getTier()) {
+            throw new Exception("ERROR: cannot supervise an Employee of an equal or greater tier.");
+        }
+        boolean isReport = false;
+        for (Employee employee1 : reports) {
+            if (employee1.equals(employee)) isReport = true;
+            if (employee1.getTier() == Company.MANAGER) {
+                for (Employee employee2 : ((Manager) employee1).reports) {
+                    if (employee2.equals(employee)) isReport = true;
+                }
+            }
+        }
+        if (isReport) {
             employee.salary += raise;
         }
         else {
-            throw new Exception("ERROR: cannot alter salary of an Employee who is not a report.\n");
+            throw new Exception("ERROR: cannot alter salary of an Employee who is not a report.");
         }
     }
 }
