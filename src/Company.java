@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Company {
@@ -121,6 +122,7 @@ public class Company {
 
             outsideSalesManager.hire(outsideSalesEmployee1);
             outsideSalesManager.hire(outsideSalesEmployee2);
+            System.out.println();
         }
     }
 
@@ -136,6 +138,7 @@ public class Company {
 
         director.fire(salesManager);
         marketingManager.fire(employee);
+        System.out.println();
     }
 
     /**
@@ -265,11 +268,37 @@ public class Company {
         System.out.println("Employee     : " + director.name);
         System.out.println("Department   : " + director.name);
         System.out.println("Title        : " + director.name);
-        System.out.println("Compensation : " + (director.salary + director.bonus + director.stockShares));
+        System.out.println("Compensation : " + (director.salary + director.bonus + director.stockShares * SHARE_PRICE));
     }
 
     private void printOrganizationChart() {
+        List<Employee> sortedEmployees = sortEmployees();
         System.out.println("Queen Industries Organization Chart");
-        for (xf)
+        for (Employee director : sortedEmployees) {
+            if (((Director) director).tier == Company.DIRECTOR) {
+                System.out.println(" - " + director.name + ", Director of " + director.department);
+                for (Employee manager : ((Director) director).reports) {
+                    if (((Manager) manager).tier == Company.MANAGER) {
+                        System.out.println("    - " + manager.name + ", " + manager.title);
+                        for (Employee employee : ((Manager) manager).reports) {
+                            if (employee.tier == Company.EMPLOYEE) System.out.println("       - " + employee.name + ", " + employee.title);
+                        }
+                    }
+                }
+            }
+        }
+        System.out.println();
+    }
+    private List<Employee> sortEmployees() {
+        List<String> tempName = new ArrayList<>();
+        for (Employee employee : staff) tempName.add(employee.name);
+        Collections.sort(tempName);
+        List<Employee> output = new ArrayList<>();
+        for (String name : tempName) {
+            for (Employee employee : staff) {
+                if (employee.name.equals(name)) output.add(employee);
+            }
+        }
+        return output;
     }
 }
